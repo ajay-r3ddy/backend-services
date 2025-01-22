@@ -10,17 +10,18 @@ import javax.sql.DataSource;
 @Configuration
 public class MutualFundPortfolioDatabaseConfig {
 
+    @Bean
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/your_database"); // Replace with your DB name
-        dataSource.setUsername("your_username"); // Replace with your DB username
-        dataSource.setPassword("your_password"); // Replace with your DB password
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres"); // Replace with your DB name
+        dataSource.setUsername("postgres"); // Replace with your DB username
+        dataSource.setPassword("root"); // Replace with your DB password
         return dataSource;
     }
-
+/*
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
-    }
+    }*/
 }
