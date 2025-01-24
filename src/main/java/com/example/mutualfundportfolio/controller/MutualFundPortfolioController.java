@@ -1,6 +1,7 @@
 package com.example.mutualfundportfolio.controller;
 
 import com.example.mutualfundportfolio.pojo.MutualFundPortfolio;
+import com.example.mutualfundportfolio.service.MutualFundExternalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +21,9 @@ public class MutualFundPortfolioController {
     private final JdbcTemplate jdbcTemplate;
 
     private final DataSource dataSource;
+
+    @Autowired
+    MutualFundExternalService mutualFundExternalService;
 
     @Autowired
     public MutualFundPortfolioController(JdbcTemplate jdbcTemplate, DataSource dataSource) {
@@ -46,5 +51,10 @@ public class MutualFundPortfolioController {
         String query = "DELETE FROM mutual_fund_portfolio where scheme_code = ?";
         int rows = jdbcTemplate.update(query, schemaCode);
         return rows > 0 ? "User deleted successfully" : "Failed to delete user";
+    }
+
+    @GetMapping("/getMutualFundsExternal/{schemaCode}")
+    public String getMutualFundsExternal(@PathVariable String schemaCode) throws IOException {
+       return mutualFundExternalService.callingMutualFundExternalApi(schemaCode);
     }
 }
